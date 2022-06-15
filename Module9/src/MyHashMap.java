@@ -1,11 +1,11 @@
 
 public class MyHashMap<K, V> {
-	private Entry<K, V>[] table;
-	private int size = 10;
+	private Entry<K, V>[] bucket;
+	private int size = 16;
 	
 	@SuppressWarnings("unchecked")
 	public MyHashMap() {
-		table = new Entry[size];
+		bucket = new Entry[size];
 	}
 
 	static class Entry<K, V> {
@@ -30,17 +30,17 @@ public class MyHashMap<K, V> {
 
 		int hash = hash(newKey);
 		Entry<K, V> newEntry = new Entry<K, V>(newKey, data, null);
-		if (table[hash] == null) {
-			table[hash] = newEntry;
+		if (bucket[hash] == null) {
+			bucket[hash] = newEntry;
 		} else {
 			Entry<K, V> previous = null;
-			Entry<K, V> current = table[hash];
+			Entry<K, V> current = bucket[hash];
 
 			while (current != null) {
 				if (current.key.equals(newKey)) {
 					if (previous == null) {
 						newEntry.next = current.next;
-						table[hash] = newEntry;
+						bucket[hash] = newEntry;
 						return;
 					} else {
 						newEntry.next = current.next;
@@ -57,10 +57,10 @@ public class MyHashMap<K, V> {
 
 	public V get(K key) {
 		int hash = hash(key);
-		if (table[hash] == null) {
+		if (bucket[hash] == null) {
 			return null;
 		} else {
-			Entry<K, V> temp = table[hash];
+			Entry<K, V> temp = bucket[hash];
 			while (temp != null) {
 				if (temp.key.equals(key))
 					return temp.value;
@@ -74,16 +74,16 @@ public class MyHashMap<K, V> {
 
 		int hash = hash(deleteKey);
 
-		if (table[hash] == null) {
+		if (bucket[hash] == null) {
 			return false;
 		} else {
 			Entry<K, V> previous = null;
-			Entry<K, V> current = table[hash];
+			Entry<K, V> current = bucket[hash];
 
 			while (current != null) {
 				if (current.key.equals(deleteKey)) {
 					if (previous == null) {
-						table[hash] = table[hash].next;
+						bucket[hash] = bucket[hash].next;
 						return true;
 					} else {
 						previous.next = current.next;
@@ -97,25 +97,31 @@ public class MyHashMap<K, V> {
 		}
 	}
 	
-	public void clear() {
-		table = null;
-		size = 0;
+	public int size() {
+		int count = 0;
+		for(int i = 0; i < size; i++) {
+			if (bucket[i] != null) {
+				count++;
+			}
+		}
+		return count;
 	}
 	
-	public int size() { // Працює не корректно
-		return size;
+	public void clear() {
+		bucket = null;
+		size = 0;
 	}
 
 	@Override
 	public String toString() {
 		
-		if (table == null) {
+		if (bucket == null) {
 			return "{}";
 		}
 
 		for (int i = 0; i < size; i++) {
-			if (table[i] != null) {
-				Entry<K, V> entry = table[i];
+			if (bucket[i] != null) {
+				Entry<K, V> entry = bucket[i];
 				while (entry != null) {
 					System.out.print("{" + entry.key + "=" + entry.value + "}" + " ");
 					entry = entry.next;
@@ -125,6 +131,3 @@ public class MyHashMap<K, V> {
 		return "";
 	}
 }
-
-
-

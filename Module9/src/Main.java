@@ -1,5 +1,4 @@
 
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -11,13 +10,13 @@ public class Main {
 		map.put(4, 4);
 		map.put(5, 5);
 		map.put(6, 6);
-		map.put(7, 7);
-		map.put(8, 8);
-		map.put(9, 9);
-		map.put(10, 10);
-		map.put(11, 11);
-
-		System.out.print(map);
+		map.put(1, 7);
 		
+		System.out.println(map.size());
+		
+		System.out.println(map);
+		
+		
+
 	}
 }

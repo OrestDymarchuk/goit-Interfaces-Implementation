@@ -31,7 +31,7 @@ public class MyQueue<E> {
 	}
 
 	public void remove(int index) {
-		if (index < 0 || index >= size) {
+		if (index < 0 || index > size) {
 			throw new IndexOutOfBoundsException();
 		} else if (index == 0) {
 			head = head.next;
@@ -42,15 +42,17 @@ public class MyQueue<E> {
 			tail.next = null;
 			size--;
 		} else {
-			Node current = head;
+			Node toDelete = head;	
 			for (int i = 0; i < index; i++) {
-				current = current.next;
+				toDelete = toDelete.next;
+			}	
+			if(toDelete != null) {
+				if(toDelete.next != null) {
+					toDelete.next.prev = toDelete.prev;
+				}
+				toDelete.prev.next = toDelete.next;
 			}
-			Node previous = current.prev;
-			Node next = current.next;
-			previous.next = current.next;
-			next.prev = previous;
-			size--;
+			size--;		
 		}
 	}
 
@@ -74,7 +76,7 @@ public class MyQueue<E> {
 		}
 		E output = head.element;
 		head = head.next;
-
+		size--;
 		return output;
 	}
 

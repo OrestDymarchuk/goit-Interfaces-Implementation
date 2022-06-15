@@ -1,11 +1,12 @@
 import java.util.Arrays;
 
 public class MyStack<E> {
-	private Object[] elements;
+	private E[] elements;
 	private int size = 0;
  
+	@SuppressWarnings("unchecked")
 	public MyStack() {
-		elements = new Object[10];
+		elements = (E[]) new Object[10];
 	}
 	
 	public void push(E elementToPush) {
@@ -33,9 +34,7 @@ public class MyStack<E> {
 	}
 	
 	public void clear() {
-		for (int i = 0; i < size; i++) {
-			elements[i] = null;
-		}
+		elements = null;
 		size = 0;
 	}
 	
@@ -43,12 +42,10 @@ public class MyStack<E> {
 		return size;
 	}
 	
-	@SuppressWarnings("unchecked")
 	public E peek() {
         return (E) elements[size - 1];
     }
 	
-	@SuppressWarnings("unchecked")
 	public E pop() {
         E topElement = (E) elements[size - 1];
         elements[--size] = null;

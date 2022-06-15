@@ -1,11 +1,12 @@
 import java.util.Arrays;
 
 public class MyArrayList<E> {
-	private Object[] elements;
+	private E[] elements;
 	private int size = 0;
 
+	@SuppressWarnings("unchecked")
 	public MyArrayList() {
-		elements = new Object[10];
+		elements = (E[]) new Object[10];
 	}
 
 	public void add(E element) {
