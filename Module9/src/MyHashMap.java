@@ -19,17 +19,16 @@ public class MyHashMap<K, V> {
 			this.next = next;
 		}
 	}
-
+	
 	private int hash(K key) {
 		return Math.abs(key.hashCode()) % size;
 	}
 
 	public void put(K newKey, V data) {
 		if (newKey == null)
-			return;
-
-		int hash = hash(newKey);
+		return;
 		Entry<K, V> newEntry = new Entry<K, V>(newKey, data, null);
+		int hash = hash(newKey);
 		if (bucket[hash] == null) {
 			bucket[hash] = newEntry;
 		} else {
@@ -107,14 +106,13 @@ public class MyHashMap<K, V> {
 		return count;
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void clear() {
-		bucket = null;
-		size = 0;
+		bucket = new Entry[bucket.length];
 	}
 
 	@Override
-	public String toString() {
-		
+	public String toString() {		
 		if (bucket == null) {
 			return "{}";
 		}
