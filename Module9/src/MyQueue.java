@@ -32,7 +32,10 @@ public class MyQueue<E> {
 
 	public void remove(int index) {
 		if (index < 0 || index > size) {
-			throw new IndexOutOfBoundsException();
+			throw new IndexOutOfBoundsException();			
+		} else if (index == 0 && head.next == null) {
+			head = null;
+			size--;		
 		} else if (index == 0) {
 			head = head.next;
 			head.prev = null;
