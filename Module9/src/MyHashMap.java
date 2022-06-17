@@ -8,10 +8,11 @@ public class MyHashMap<K, V> {
 		bucket = new Entry[size];
 	}
 
-	static class Entry<K, V> {
-		K key;
-		V value;
-		Entry<K, V> next;
+	@SuppressWarnings("hiding")
+	private class Entry<K, V> {
+		private K key;
+		private V value;
+		private Entry<K, V> next;
 
 		public Entry(K key, V value, Entry<K, V> next) {
 			this.key = key;
